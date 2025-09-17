@@ -4,8 +4,7 @@ import bcrypt from "bcrypt";
 import { registrationSchema, RegistrationInput } from "./validation/validate";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
-import { success } from "zod";
-import { tr } from "zod/v4/locales";
+import { regex, success } from "zod";
 import { error } from "console";
 
 
@@ -55,9 +54,9 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
     (req as any).employee = decoded;
     next();
   }
-  catch (err:any) {
-    if(err.name === "TokenExpiredError"){
-      res.status(401).json({Seccess:false,Message:"Token Expired"});
+  catch (err: any) {
+    if (err.name === "TokenExpiredError") {
+      res.status(401).json({ Seccess: false, Message: "Token Expired" });
     }
     return res.status(403).json({ Success: false, Message: "Invalid Token", error: err })
 
@@ -135,8 +134,8 @@ app.post('/login', async (req: Request, res: Response) => {
       { expiresIn: "1h" }
     );
 
-    console.log("Generated Token : ",token);
-    
+    console.log("Generated Token : ", token);
+
 
     const { password: _, ...employeeWithoutPassword } = employee?.toObject();
     return res.json({ Success: true, Message: "Login Successful", token, employee: employeeWithoutPassword });
@@ -148,33 +147,68 @@ app.post('/login', async (req: Request, res: Response) => {
 
 
 
-//------- Get All Employess (Protected)-------
+
+//------- Get All Employees Using Pagination & Filtered -----------
 
 app.get('/employees', authenticateJWT, async (req: Request, res: Response) => {
+
   try {
-    const employees = await employeeModel.find({}, { password: 0 });
-    res.json({ Success: true, Message: "Employees Data Fetched Successfully", employees })
+    let { page, limit, name, email, id, department, salary, minSalary, maxSalary } = req.query;
+
+    //Default pagination values
+
+    const pageNumber = parseInt(page as string) || 1;
+    const pageSize = parseInt(limit as string) || 10;
+    const skip = (pageNumber - 1) * pageSize;
+
+
+    //Built Filter Object
+
+    const filter: any = {};
+    if (id) filter._id = id;
+    if (name) filter.name = { $regex: new RegExp(name as string, 'i') };        // case-insensitive
+    if (email) filter.email = { $regex: new RegExp(email as string, 'i') };
+    if (department) filter.department = { $regex: new RegExp(department as string, 'i') };
+
+
+    if (salary) {
+      filter.salary = Number(salary);
+    } else if (minSalary || maxSalary) {
+      filter.salary = {};
+      if (minSalary) filter.salary.$gte = Number(minSalary);
+      if (maxSalary) filter.salary.$lte = Number(maxSalary);
+    }
+
+    const totalEmployees = await employeeModel.countDocuments(filter);
+    const employees = await employeeModel
+      .find(filter, { password: 0 })
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });     //latest First
+
+
+    res.json({ Success: true, Message: "Employee data fetched successfully", page: pageNumber, limit: pageSize, total: totalEmployees, employees })
   }
   catch (err) {
-    res.status(500).json({ Success: false, Message: "Server Error", error: err })
+    res.status(500).json({ Success: false, Message: "Server Error", error: err instanceof Error ? err.message : err });
   }
 })
 
 // -------- Get Single Employee By MongoDB id --------
 
-app.get('/employees/:id',authenticateJWT,async(req:Request,res:Response)=>{
-  try{
-    const {id} = req.params;
-    const employee = await employeeModel.find({},{password:0});
-    if(!employee){
-      return res.status(404).json({Success:false,Message:"Employee Not Found"})
-    
-  
+app.get('/employees/:id', authenticateJWT, async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const employee = await employeeModel.findById(id, { password: 0 });
+    if (!employee) {
+      return res.status(404).json({ Success: false, Message: "Employee Not Found" })
+
+
     }
-    res.json({Success:true,Message:"Employee Data Fetched Successfully"})
+    res.json({ Success: true, Message: "Employee Data Fetched Successfully", employee })
   }
-  catch(err){
-    res.status(500).json({Success:false,Message:"Server Error",error:err instanceof Error ? err.message : err})
+  catch (err) {
+    res.status(500).json({ Success: false, Message: "Server Error", error: err instanceof Error ? err.message : err })
   }
 })
 
