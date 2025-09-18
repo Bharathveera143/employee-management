@@ -1,13 +1,15 @@
 import { Request,Response } from "express";
 import { EmployeeService } from "../services/employeeService";
-import { regex, success } from "zod";
-import { tr } from "zod/v4/locales";
-import { error } from "console";
+import { registrationSchema, RegistrationInput } from "../validation/validate";
+
 
 export class EmployeeController{
     static async register(req:Request,res:Response){
         try{
-            const employee = await EmployeeService.registerEmployee(req.body);
+
+            const validatedData: RegistrationInput = registrationSchema.parse(req.body);
+
+            const employee = await EmployeeService.registerEmployee(validatedData);
             res.json({success:true,message:"Employee Registerd Successfully",employee})
         }
         catch(err:any){
