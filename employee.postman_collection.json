@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "4cfe306d-1bcc-4c2f-86d0-9867729c33ba",
+		"name": "employee",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47213320",
+		"_collection_link": "https://science-geoscientist-97534411-5658443.postman.co/workspace/Bharath-Veera's-Workspace~3ab834f0-e2d0-4581-80d7-13344342e534/collection/47213320-4cfe306d-1bcc-4c2f-86d0-9867729c33ba?action=share&source=collection_link&creator=47213320"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Bharath\",\r\n  \"email\": \"bharathcheck@example.com\",\r\n  \"password\": \"Bharath@123\",\r\n  \"department\": \"Backend Developer\",\r\n  \"salary\": 75000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"bharathcheck@example.com\",\r\n    \"password\": \"Bharath@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2I4N2I0ZDAzYWE2ZmI1NjcxNzQ4MCIsImVtYWlsIjoiYmhhcmF0aGNoZWNrQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU4MTY5MDk0LCJleHAiOjE3NTgxNzI2OTR9.AQdZXQ29YohWHOVs_LRhA1pScN0Xn6kEREgGAF8kQVI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2I4N2I0ZDAzYWE2ZmI1NjcxNzQ4MCIsImVtYWlsIjoiYmhhcmF0aGNoZWNrQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU4MTY5MDk0LCJleHAiOjE3NTgxNzI2OTR9.AQdZXQ29YohWHOVs_LRhA1pScN0Xn6kEREgGAF8kQVI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/employees/68ca58b54923d21f41653a1a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees",
+						"68ca58b54923d21f41653a1a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2I4N2I0ZDAzYWE2ZmI1NjcxNzQ4MCIsImVtYWlsIjoiYmhhcmF0aGNoZWNrQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU4MTY5MDk0LCJleHAiOjE3NTgxNzI2OTR9.AQdZXQ29YohWHOVs_LRhA1pScN0Xn6kEREgGAF8kQVI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/employees?page=1&limit=5&department=Engineering&minSalary=50000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "department",
+							"value": "Engineering"
+						},
+						{
+							"key": "minSalary",
+							"value": "50000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2I4N2I0ZDAzYWE2ZmI1NjcxNzQ4MCIsImVtYWlsIjoiYmhhcmF0aGNoZWNrQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU4MTY5MDk0LCJleHAiOjE3NTgxNzI2OTR9.AQdZXQ29YohWHOVs_LRhA1pScN0Xn6kEREgGAF8kQVI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Veeran S\",\r\n    \"email\":\"veera1updated@gmail.com\",\r\n    \"department\":\"Engineer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/employees/68c93c4c29fdb3f7cd28d2af",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees",
+						"68c93c4c29fdb3f7cd28d2af"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Y2I4N2I0ZDAzYWE2ZmI1NjcxNzQ4MCIsImVtYWlsIjoiYmhhcmF0aGNoZWNrQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU4MTY5MDk0LCJleHAiOjE3NTgxNzI2OTR9.AQdZXQ29YohWHOVs_LRhA1pScN0Xn6kEREgGAF8kQVI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/employees/68c93c4c29fdb3f7cd28d2af",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees",
+						"68c93c4c29fdb3f7cd28d2af"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
